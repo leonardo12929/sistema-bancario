@@ -1,0 +1,2 @@
+ALTER TABLE ContaBancaria
+MODIFY COLUMN dataCriacao DATETIME NOT NULL;
