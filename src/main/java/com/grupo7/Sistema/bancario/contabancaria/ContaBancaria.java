@@ -5,6 +5,8 @@ import java.time.LocalDateTime;
 
 import org.springframework.web.bind.annotation.RequestBody;
 
+import com.grupo7.Sistema.bancario.cliente.Cliente;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -12,6 +14,8 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -40,8 +44,12 @@ public class ContaBancaria {
     @Enumerated(EnumType.STRING)
     private StatusConta status;
     private LocalDateTime dataCriacao;
-    private String titular;
+    private String apelido;
     private boolean ativo = true;
+    @ManyToOne
+    @JoinColumn(name = "titularId")
+    private Cliente titular;
+
 
     public ContaBancaria(DadosCadastroContaBancaria dados) {
         this.numeroConta = "4345";
@@ -50,12 +58,12 @@ public class ContaBancaria {
         this.tipoConta = dados.tipoConta();
         this.status = StatusConta.ATIVADA;
         this.dataCriacao = LocalDateTime.now();
-        this.titular = dados.titular();        
+        this.apelido = dados.apelido();
     }
 
     public void atulizarContaBancaria(@RequestBody @Valid DadosAtualizarContaBancaria dados) {
-        if (dados.titular() != null) {
-            this.titular = dados.titular();
+        if (dados.apelido() != null) {
+            this.apelido = dados.apelido();
         }
         
     }

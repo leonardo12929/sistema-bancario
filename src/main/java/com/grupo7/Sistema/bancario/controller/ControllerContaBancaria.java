@@ -1,9 +1,8 @@
 package com.grupo7.Sistema.bancario.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +18,9 @@ import com.grupo7.Sistema.bancario.contabancaria.ContaBancariaRepository;
 import com.grupo7.Sistema.bancario.contabancaria.DadosAtualizarContaBancaria;
 import com.grupo7.Sistema.bancario.contabancaria.DadosCadastroContaBancaria;
 import com.grupo7.Sistema.bancario.contabancaria.DadosListarContaBancaria;
+import com.grupo7.Sistema.bancario.cliente.Cliente;
+import com.grupo7.Sistema.bancario.cliente.ClienteRepository;
+
 
 import jakarta.validation.Valid;
 
@@ -26,13 +28,20 @@ import jakarta.validation.Valid;
 @RequestMapping("/ContaBancaria")
 public class ControllerContaBancaria {
 
-    @Autowired
-    private ContaBancariaRepository repository;
+    private final ContaBancariaRepository repository;
+    private final ClienteRepository clienteRepository;
 
+    public ControllerContaBancaria(ContaBancariaRepository repository, ClienteRepository clienteRepository) {
+        this.repository = repository;
+        this.clienteRepository = clienteRepository;
+    }
     @PostMapping
     @Transactional
     public void Cadastrar(@RequestBody @Valid DadosCadastroContaBancaria dados) {
-        repository.save(new ContaBancaria(dados));
+        Cliente titular = clienteRepository.getReferenceById(dados.titular());
+        ContaBancaria contaBancaria = new ContaBancaria(dados);
+        contaBancaria.setTitular(titular);
+        repository.save(contaBancaria);
 
     }
 
@@ -40,6 +49,11 @@ public class ControllerContaBancaria {
     public List<DadosListarContaBancaria> listar() {
         return repository.findAllByAtivoTrue().stream().map(DadosListarContaBancaria::new).toList();
 
+    }
+    @GetMapping("/{id}")
+    public DadosListarContaBancaria listarId(@PathVariable long id) {
+        var conta = repository.getReferenceById(id);
+        return new DadosListarContaBancaria(conta);
     }
 
     @PutMapping
@@ -57,9 +71,11 @@ public class ControllerContaBancaria {
 
     @DeleteMapping("inativar/{id}")
     @Transactional
-    public void inativar(@PathVariable long id) {
+    public ResponseEntity<Void> inativar(@PathVariable long id) {
         var contaBancaria = repository.getReferenceById(id);
         contaBancaria.setAtivo(false);
+
+        return ResponseEntity.noContent().build();
     }
     @PutMapping("ativar/{id}")
     @Transactional

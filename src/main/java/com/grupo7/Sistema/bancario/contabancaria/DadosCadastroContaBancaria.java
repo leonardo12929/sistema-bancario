@@ -5,7 +5,8 @@ import jakarta.validation.constraints.NotBlank;
 public record DadosCadastroContaBancaria(
     TipoConta tipoConta,
     @NotBlank
-    String titular
+    String apelido,
+    long titular
 ) {
 } 
     

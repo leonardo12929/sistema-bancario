@@ -7,6 +7,6 @@ public record DadosAtualizarContaBancaria(
     @NotNull
     long id,    
     @NotBlank
-    String titular) {
+    String apelido) {
     
 }
