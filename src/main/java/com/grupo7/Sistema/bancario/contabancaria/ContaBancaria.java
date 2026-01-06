@@ -61,7 +61,7 @@ public class ContaBancaria {
         this.apelido = dados.apelido();
     }
 
-    public void atulizarContaBancaria(@RequestBody @Valid DadosAtualizarContaBancaria dados) {
+    public void atualizarContaBancaria(@RequestBody @Valid DadosAtualizarContaBancaria dados) {
         if (dados.apelido() != null) {
             this.apelido = dados.apelido();
         }

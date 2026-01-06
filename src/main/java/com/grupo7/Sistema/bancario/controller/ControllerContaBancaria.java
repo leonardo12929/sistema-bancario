@@ -12,11 +12,13 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import com.grupo7.Sistema.bancario.contabancaria.ContaBancaria;
 import com.grupo7.Sistema.bancario.contabancaria.ContaBancariaRepository;
 import com.grupo7.Sistema.bancario.contabancaria.DadosAtualizarContaBancaria;
 import com.grupo7.Sistema.bancario.contabancaria.DadosCadastroContaBancaria;
+import com.grupo7.Sistema.bancario.contabancaria.DadosDetalhamentoConta;
 import com.grupo7.Sistema.bancario.contabancaria.DadosListarContaBancaria;
 import com.grupo7.Sistema.bancario.cliente.Cliente;
 import com.grupo7.Sistema.bancario.cliente.ClienteRepository;
@@ -37,36 +39,43 @@ public class ControllerContaBancaria {
     }
     @PostMapping
     @Transactional
-    public void Cadastrar(@RequestBody @Valid DadosCadastroContaBancaria dados) {
+    public ResponseEntity<DadosDetalhamentoConta> Cadastrar(@RequestBody @Valid DadosCadastroContaBancaria dados, UriComponentsBuilder uriBuilder) {
         Cliente titular = clienteRepository.getReferenceById(dados.titular());
         ContaBancaria contaBancaria = new ContaBancaria(dados);
         contaBancaria.setTitular(titular);
         repository.save(contaBancaria);
 
+        var uri = uriBuilder.path("/ContaBancaria/{id}").buildAndExpand(contaBancaria.getId()).toUri();
+
+        return ResponseEntity.created(uri).body(new DadosDetalhamentoConta(contaBancaria));
+
     }
 
     @GetMapping
-    public List<DadosListarContaBancaria> listar() {
-        return repository.findAllByAtivoTrue().stream().map(DadosListarContaBancaria::new).toList();
+    public ResponseEntity<List<DadosListarContaBancaria>> listar() {
+        var lista = repository.findAllByAtivoTrue().stream().map(DadosListarContaBancaria::new).toList();
+        return ResponseEntity.ok(lista);
 
     }
     @GetMapping("/{id}")
-    public DadosListarContaBancaria listarId(@PathVariable long id) {
+    public ResponseEntity<DadosDetalhamentoConta> listarId(@PathVariable long id) {
         var conta = repository.getReferenceById(id);
-        return new DadosListarContaBancaria(conta);
+        return ResponseEntity.ok(new DadosDetalhamentoConta(conta));
     }
 
     @PutMapping
     @Transactional
-    public void atualizar(@RequestBody @Valid DadosAtualizarContaBancaria dados) {
+    public ResponseEntity<DadosDetalhamentoConta> atualizar(@RequestBody @Valid DadosAtualizarContaBancaria dados) {
         var contaBancaria = repository.getReferenceById(dados.id());
-        contaBancaria.atulizarContaBancaria(dados);
+        contaBancaria.atualizarContaBancaria(dados);
+        return ResponseEntity.ok(new DadosDetalhamentoConta(contaBancaria));
     }
 
     @DeleteMapping("/{id}")
     @Transactional
-    public void deletar(@PathVariable long id) {
+    public ResponseEntity<Void> deletar(@PathVariable long id) {
         repository.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("inativar/{id}")
@@ -77,10 +86,12 @@ public class ControllerContaBancaria {
 
         return ResponseEntity.noContent().build();
     }
-    @PutMapping("ativar/{id}")
+    @PutMapping("reativar/{id}")
     @Transactional
-    public void reativar(@PathVariable long id) {
+    public ResponseEntity<Void> reativar(@PathVariable long id) {
         var contaBancaria = repository.getReferenceById(id);
         contaBancaria.setAtivo(true);
+
+        return ResponseEntity.noContent().build();
     }
 }
