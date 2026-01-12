@@ -20,7 +20,6 @@ import com.grupo7.Sistema.bancario.contabancaria.DadosAtualizarContaBancaria;
 import com.grupo7.Sistema.bancario.contabancaria.DadosCadastroContaBancaria;
 import com.grupo7.Sistema.bancario.contabancaria.DadosDetalhamentoConta;
 import com.grupo7.Sistema.bancario.contabancaria.DadosListarContaBancaria;
-import com.grupo7.Sistema.bancario.cliente.Cliente;
 import com.grupo7.Sistema.bancario.cliente.ClienteRepository;
 
 
@@ -40,8 +39,8 @@ public class ControllerContaBancaria {
     @PostMapping
     @Transactional
     public ResponseEntity<DadosDetalhamentoConta> Cadastrar(@RequestBody @Valid DadosCadastroContaBancaria dados, UriComponentsBuilder uriBuilder) {
-        Cliente titular = clienteRepository.getReferenceById(dados.titular());
-        ContaBancaria contaBancaria = new ContaBancaria(dados);
+        var titular = clienteRepository.getReferenceById(dados.titular());
+        var contaBancaria = new ContaBancaria(dados);
         contaBancaria.setTitular(titular);
         repository.save(contaBancaria);
 
