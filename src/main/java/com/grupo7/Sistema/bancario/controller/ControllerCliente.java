@@ -52,7 +52,7 @@ public class ControllerCliente {
 
     @GetMapping("/{id}")
     public ResponseEntity<DadosCliente> listaId(@PathVariable long id ) {
-        var cliente = repository.getReferenceById(id);
+        var cliente = repository.getReferenceById(id);  
         return ResponseEntity.ok(new DadosCliente(cliente));
     }
 

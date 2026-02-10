@@ -1,2 +1,2 @@
-ALTER TABLE ContaBancaria
+ALTER TABLE contabancaria
 MODIFY COLUMN dataCriacao DATETIME NOT NULL;
