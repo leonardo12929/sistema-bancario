@@ -1,10 +1,12 @@
-package com.grupo7.Sistema.bancario.cliente;
+package com.grupo7.Sistema.bancario.entity;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import org.springframework.web.bind.annotation.RequestBody;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.grupo7.Sistema.bancario.dto.dtocliente.DadosAtualizarCliente;
+import com.grupo7.Sistema.bancario.dto.dtocliente.DadosCadastroCliente;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -12,14 +14,10 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.grupo7.Sistema.bancario.contabancaria.ContaBancaria;
 
 
 @Getter

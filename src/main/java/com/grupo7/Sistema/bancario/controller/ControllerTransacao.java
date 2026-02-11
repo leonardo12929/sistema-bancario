@@ -5,8 +5,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.grupo7.Sistema.bancario.infra.TransacaoService;
-import com.grupo7.Sistema.bancario.transacao.DadosFazerTransacao;
+import com.grupo7.Sistema.bancario.dto.dtotransacao.DadosFazerTransacao;
+import com.grupo7.Sistema.bancario.service.TransacaoService;
 
 @RestController
 @RequestMapping("/Transacao")

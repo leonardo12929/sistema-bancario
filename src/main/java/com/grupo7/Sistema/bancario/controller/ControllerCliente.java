@@ -13,12 +13,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import com.grupo7.Sistema.bancario.cliente.Cliente;
-import com.grupo7.Sistema.bancario.cliente.ClienteRepository;
-import com.grupo7.Sistema.bancario.cliente.DadosAtualizarCliente;
-import com.grupo7.Sistema.bancario.cliente.DadosCadastroCliente;
-import com.grupo7.Sistema.bancario.cliente.DadosDetalhamentoCliente;
-import com.grupo7.Sistema.bancario.cliente.DadosCliente;
+import com.grupo7.Sistema.bancario.dto.dtocliente.DadosAtualizarCliente;
+import com.grupo7.Sistema.bancario.dto.dtocliente.DadosCadastroCliente;
+import com.grupo7.Sistema.bancario.dto.dtocliente.DadosCliente;
+import com.grupo7.Sistema.bancario.dto.dtocliente.DadosDetalhamentoCliente;
+import com.grupo7.Sistema.bancario.entity.Cliente;
+import com.grupo7.Sistema.bancario.repository.ClienteRepository;
 
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;

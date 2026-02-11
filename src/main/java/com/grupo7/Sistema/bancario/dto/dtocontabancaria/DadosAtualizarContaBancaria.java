@@ -1,4 +1,4 @@
-package com.grupo7.Sistema.bancario.contabancaria;
+package com.grupo7.Sistema.bancario.dto.dtocontabancaria;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

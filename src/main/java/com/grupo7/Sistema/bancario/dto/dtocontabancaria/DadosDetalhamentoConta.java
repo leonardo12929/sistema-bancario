@@ -1,8 +1,11 @@
-package com.grupo7.Sistema.bancario.contabancaria;
+package com.grupo7.Sistema.bancario.dto.dtocontabancaria;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-import com.grupo7.Sistema.bancario.cliente.DadosCliente;
+import com.grupo7.Sistema.bancario.dto.dtocliente.DadosCliente;
+import com.grupo7.Sistema.bancario.entity.ContaBancaria;
+import com.grupo7.Sistema.bancario.enums.enumcontabancaria.StatusConta;
+import com.grupo7.Sistema.bancario.enums.enumcontabancaria.TipoConta;
 
 public record DadosDetalhamentoConta (
     

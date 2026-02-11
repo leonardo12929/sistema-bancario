@@ -1,7 +1,9 @@
-package com.grupo7.Sistema.bancario.cliente;
+package com.grupo7.Sistema.bancario.dto.dtocliente;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+
+import com.grupo7.Sistema.bancario.entity.Cliente;
 
 
 public record DadosDetalhamentoCliente(

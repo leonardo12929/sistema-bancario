@@ -14,14 +14,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import com.grupo7.Sistema.bancario.contabancaria.ContaBancaria;
-import com.grupo7.Sistema.bancario.contabancaria.ContaBancariaRepository;
-import com.grupo7.Sistema.bancario.contabancaria.DadosAtualizarContaBancaria;
-import com.grupo7.Sistema.bancario.contabancaria.DadosCadastroContaBancaria;
-import com.grupo7.Sistema.bancario.contabancaria.DadosDetalhamentoConta;
-import com.grupo7.Sistema.bancario.contabancaria.DadosListarContaBancaria;
-import com.grupo7.Sistema.bancario.cliente.ClienteRepository;
-
+import com.grupo7.Sistema.bancario.dto.dtocontabancaria.DadosAtualizarContaBancaria;
+import com.grupo7.Sistema.bancario.dto.dtocontabancaria.DadosCadastroContaBancaria;
+import com.grupo7.Sistema.bancario.dto.dtocontabancaria.DadosDetalhamentoConta;
+import com.grupo7.Sistema.bancario.dto.dtocontabancaria.DadosListarContaBancaria;
+import com.grupo7.Sistema.bancario.entity.ContaBancaria;
+import com.grupo7.Sistema.bancario.repository.ClienteRepository;
+import com.grupo7.Sistema.bancario.repository.ContaBancariaRepository;
 
 import jakarta.validation.Valid;
 

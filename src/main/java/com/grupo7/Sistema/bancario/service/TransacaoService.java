@@ -1,15 +1,14 @@
-package com.grupo7.Sistema.bancario.infra;
+package com.grupo7.Sistema.bancario.service;
 
 import java.math.BigDecimal;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.grupo7.Sistema.bancario.contabancaria.ContaBancariaRepository;
-import com.grupo7.Sistema.bancario.contabancaria.DadosDetalhamentoConta;
-import com.grupo7.Sistema.bancario.transacao.DadosFazerTransacao;
-import com.grupo7.Sistema.bancario.transacao.Transacao;
-import com.grupo7.Sistema.bancario.transacao.TransacaoRepository;
+import com.grupo7.Sistema.bancario.dto.dtotransacao.DadosFazerTransacao;
+import com.grupo7.Sistema.bancario.entity.Transacao;
+import com.grupo7.Sistema.bancario.repository.ContaBancariaRepository;
+import com.grupo7.Sistema.bancario.repository.TransacaoRepository;
 
 @Service
 public class TransacaoService {

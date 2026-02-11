@@ -1,4 +1,4 @@
-package com.grupo7.Sistema.bancario.contabancaria;
+package com.grupo7.Sistema.bancario.enums.enumcontabancaria;
 
 public enum StatusConta {
     ATIVADA,

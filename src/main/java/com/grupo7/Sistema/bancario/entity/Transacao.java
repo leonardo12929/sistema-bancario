@@ -1,9 +1,10 @@
-package com.grupo7.Sistema.bancario.transacao;
+package com.grupo7.Sistema.bancario.entity;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-import com.grupo7.Sistema.bancario.contabancaria.ContaBancaria;
+import com.grupo7.Sistema.bancario.enums.enumtransacao.StatusTransacao;
+import com.grupo7.Sistema.bancario.enums.enumtransacao.TipoTransacao;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -33,14 +34,14 @@ public class Transacao {
     @JoinColumn (name = "idContaDestino")
     private ContaBancaria idContaDestino;
     @Enumerated(EnumType.STRING)
-    private Tipo tipo;
+    private TipoTransacao tipo;
     @Enumerated(EnumType.STRING)
-    private Status status;
+    private StatusTransacao status;
     private BigDecimal valor;
     private LocalDateTime dataTransacao;
 
     public Transacao() {
-        this.status = status.COMFIRMADA;
-        this.dataTransacao = dataTransacao.now();
+        this.status = StatusTransacao.COMFIRMADA;
+        this.dataTransacao = LocalDateTime.now();
     }
 }

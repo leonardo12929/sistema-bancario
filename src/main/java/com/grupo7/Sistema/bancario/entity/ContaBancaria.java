@@ -1,11 +1,14 @@
-package com.grupo7.Sistema.bancario.contabancaria;
+package com.grupo7.Sistema.bancario.entity;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 import org.springframework.web.bind.annotation.RequestBody;
 
-import com.grupo7.Sistema.bancario.cliente.Cliente;
+import com.grupo7.Sistema.bancario.dto.dtocontabancaria.DadosAtualizarContaBancaria;
+import com.grupo7.Sistema.bancario.dto.dtocontabancaria.DadosCadastroContaBancaria;
+import com.grupo7.Sistema.bancario.enums.enumcontabancaria.StatusConta;
+import com.grupo7.Sistema.bancario.enums.enumcontabancaria.TipoConta;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

@@ -1,4 +1,4 @@
-package com.grupo7.Sistema.bancario.cliente;
+package com.grupo7.Sistema.bancario.dto.dtocliente;
 
 import java.time.LocalDate;
 

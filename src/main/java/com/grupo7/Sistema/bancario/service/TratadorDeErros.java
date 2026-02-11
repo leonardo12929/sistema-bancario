@@ -1,4 +1,4 @@
-package com.grupo7.Sistema.bancario.infra;
+package com.grupo7.Sistema.bancario.service;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
