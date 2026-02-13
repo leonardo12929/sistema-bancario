@@ -1,28 +1,28 @@
-package com.grupo7.Sistema.bancario.service;
+package com.grupo7.Sistema.bancario.service.servicetransferencia;
 
 import java.math.BigDecimal;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.grupo7.Sistema.bancario.dto.dtotransacao.DadosFazerTransacao;
-import com.grupo7.Sistema.bancario.entity.Transacao;
+import com.grupo7.Sistema.bancario.dto.dtotransacao.DadosFazerTransferencia;
+import com.grupo7.Sistema.bancario.entity.Transferencia;
 import com.grupo7.Sistema.bancario.repository.ContaBancariaRepository;
-import com.grupo7.Sistema.bancario.repository.TransacaoRepository;
+import com.grupo7.Sistema.bancario.repository.TransferenciaRepository;
 
 @Service
-public class TransacaoService {
+public class TransferenciaService {
 
-    private TransacaoRepository repository;
+    private TransferenciaRepository repository;
     private ContaBancariaRepository repositoryConta;
     
-    public TransacaoService(TransacaoRepository repository, ContaBancariaRepository repositoryConta ) {
+    public TransferenciaService(TransferenciaRepository repository, ContaBancariaRepository repositoryConta ) {
         this.repository = repository;
         this.repositoryConta = repositoryConta;
     }
     
     @Transactional
-    public void fazerTransacao(DadosFazerTransacao dados) {
+    public void transferencia(DadosFazerTransferencia dados) {
         var contaOrigem = repositoryConta.getReferenceById(dados.idContaOrigem());
         var contaDestino = repositoryConta.getReferenceById(dados.idContaDestino());
 
@@ -36,18 +36,19 @@ public class TransacaoService {
         if (valorContaOrigemSubtraida.compareTo(BigDecimal.ZERO) < 0) {
             throw new IllegalArgumentException("Algo de errado");
         }
-        var transacao = new Transacao();
-        transacao.setTipo(dados.tipo());
-        transacao.setValor(dados.valor());
+        var transferencia = new Transferencia();
+        transferencia.processar();
+        transferencia.setTipo(dados.tipo());
+        transferencia.setValor(dados.valor());
         
         
         contaOrigem.setSaldo(valorContaOrigemSubtraida);
         contaDestino.setSaldo(valorContaDestinoSomada);
 
-        transacao.setIdContaOrigem(contaOrigem);
-        transacao.setIdContaDestino(contaDestino);
+        transferencia.setIdContaOrigem(contaOrigem);
+        transferencia.setIdContaDestino(contaDestino);
 
         
-        repository.save(transacao);
+        repository.save(transferencia);
     } 
 }

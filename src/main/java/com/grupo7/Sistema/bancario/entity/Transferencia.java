@@ -3,8 +3,9 @@ package com.grupo7.Sistema.bancario.entity;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-import com.grupo7.Sistema.bancario.enums.enumtransacao.StatusTransacao;
-import com.grupo7.Sistema.bancario.enums.enumtransacao.TipoTransacao;
+import com.grupo7.Sistema.bancario.enums.enumtransferencia.StatusTransferencia;
+import com.grupo7.Sistema.bancario.enums.enumtransferencia.TipoTransferencia;
+import com.grupo7.Sistema.bancario.service.base.Transacao;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -16,14 +17,16 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
 @AllArgsConstructor
+@NoArgsConstructor
 
 @Entity
-public class Transacao {
+public class Transferencia extends Transacao{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -34,14 +37,15 @@ public class Transacao {
     @JoinColumn (name = "idContaDestino")
     private ContaBancaria idContaDestino;
     @Enumerated(EnumType.STRING)
-    private TipoTransacao tipo;
+    private TipoTransferencia tipo;
     @Enumerated(EnumType.STRING)
-    private StatusTransacao status;
+    private StatusTransferencia status;
     private BigDecimal valor;
     private LocalDateTime dataTransacao;
 
-    public Transacao() {
-        this.status = StatusTransacao.COMFIRMADA;
+    @Override
+    public void processar() {
+        this.status = StatusTransferencia.CONFIRMADA;
         this.dataTransacao = LocalDateTime.now();
     }
 }
