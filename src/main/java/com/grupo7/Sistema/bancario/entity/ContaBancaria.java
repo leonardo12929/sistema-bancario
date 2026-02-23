@@ -57,7 +57,7 @@ public class ContaBancaria {
     public ContaBancaria(DadosCadastroContaBancaria dados) {
         this.numeroConta = "4345";
         this.agencia = "666";
-        this.saldo = BigDecimal.valueOf(500.00);
+        this.saldo = BigDecimal.valueOf(0.00);
         this.tipoConta = dados.tipoConta();
         this.status = StatusConta.ATIVADA;
         this.dataCriacao = LocalDateTime.now();

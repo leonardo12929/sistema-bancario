@@ -4,13 +4,11 @@ import java.math.BigDecimal;
 
 import com.grupo7.Sistema.bancario.enums.enumtransacao.TipoTransacao;
 
-
-public  record DadosFazerTransacao(
-    long idContaOrigem,
+public record TransacaoOutros(
+    
     long idContaDestino,
     TipoTransacao tipo,
     BigDecimal valor
-
 ) {
     
 }
