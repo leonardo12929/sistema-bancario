@@ -5,11 +5,12 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import com.grupo7.Sistema.bancario.dto.dtotransacao.ListarTransacao;
-import com.grupo7.Sistema.bancario.dto.dtotransacao.TransacaoOutros;
 import com.grupo7.Sistema.bancario.dto.dtotransacao.DadosTransacao;
 import com.grupo7.Sistema.bancario.entity.Transacao;
+import com.grupo7.Sistema.bancario.enums.enumtransacao.Movimentacao;
 import com.grupo7.Sistema.bancario.repository.ContaBancariaRepository;
 import com.grupo7.Sistema.bancario.repository.TransacaoRepository;
 
@@ -25,7 +26,11 @@ public class TransacaoService {
         this.repositoryConta = repositoryConta;
     }
     
-    public void transferencia(DadosTransacao dados) {
+
+    //||| TIPOS DE MOVIMENTAÇÕES |||
+
+    // TRANSFERENCIA
+    public Transacao transferencia(DadosTransacao dados) {
         var contaOrigem = repositoryConta.getReferenceById(dados.idContaOrigem());
         var contaDestino = repositoryConta.getReferenceById(dados.idContaDestino());
 
@@ -42,6 +47,7 @@ public class TransacaoService {
         var transacao = new Transacao();
         transacao.setTipo(dados.tipo());
         transacao.setValor(dados.valor());
+        transacao.setMovimentacao(Movimentacao.TRNSFERENCIA);
         
         
         contaOrigem.setSaldo(saldoContaOrigemSubtraida);
@@ -52,8 +58,11 @@ public class TransacaoService {
 
         
         repository.save(transacao);
+
+        return transacao;
     } 
 
+    // SAQUE
     public Transacao saque(DadosTransacao dados) {
 
         var contaDestino = repositoryConta.getReferenceById(dados.idContaDestino());
@@ -66,6 +75,8 @@ public class TransacaoService {
         var transacao = new Transacao();
         transacao.setTipo(dados.tipo());
         transacao.setValor(dados.valor());
+        transacao.setMovimentacao(Movimentacao.SAQUE);
+        
 
         contaDestino.setSaldo(saldoContaDestinoSubtraida);
 
@@ -76,7 +87,35 @@ public class TransacaoService {
         return transacao;
     }
 
+    // DEPOSITO
+    public Transacao deposito(DadosTransacao dados) {
+        var contaDestino = repositoryConta.getReferenceById(dados.idContaDestino());
+        BigDecimal SaldoContaDestinoSomada = contaDestino.getSaldo().add(dados.valor());
+
+        var transacao = new Transacao();
+        transacao.setTipo(dados.tipo());
+        transacao.setValor(dados.valor());
+        transacao.setMovimentacao(Movimentacao.DEPOSITO);
+
+        contaDestino.setSaldo(SaldoContaDestinoSomada);
+        
+        transacao.setIdContaDestino(contaDestino);
+        transacao.setIdContaOrigem(null);
+        
+        repository.save(transacao);
+
+        return transacao;
+
+    }
+
+    // Gets
     public List<ListarTransacao> exibirTransacao() {
         return repository.findAll().stream().map(ListarTransacao:: new).toList();
+    }
+
+    
+    public ListarTransacao exibirIdTransacao(long id) {
+        var transacao = repository.getReferenceById(id);
+        return new ListarTransacao(transacao);
     }
 }
